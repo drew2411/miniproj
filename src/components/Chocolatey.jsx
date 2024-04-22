@@ -69,7 +69,11 @@ function Chocolatey() {
 }
 
 const Wrapper= styled.div`
-    margin: 4rem 0rem    
+    margin: 4rem 0rem    ;
+    h3{
+        font-weight:1200;
+        margin-bottom:1rem;
+    }
 `;
 const Card= styled.div`
     min-height : 25rem;

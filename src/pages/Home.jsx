@@ -1,6 +1,9 @@
 import Chocolatey from "../components/Chocolatey"
 import Popular from "../components/Popular"
+import Spicy from "../components/Spicy"
+import Vegan from "../components/Vegan"
 import { motion } from "framer-motion"
+
 function Home() {
   return (
     <motion.div
@@ -12,6 +15,8 @@ function Home() {
         
         <Popular />
         <Chocolatey />
+        <Spicy />
+        <Vegan />
         
     </motion.div>
   )

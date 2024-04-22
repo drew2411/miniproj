@@ -45,12 +45,14 @@ const SLink= styled(NavLink)`
     font-size:1.5rem;
   }
   &.active{
-    background: linear-gradient(to right, grey,antiquewhite);
+    //background: linear-gradient(to right, grey,antiquewhite);
+    background: antiquewhite;
+    color:black;
     svg{
-      color:white;
+      color:black;
     }
     h4{
-      color:white;
+      color:black;
     }
   }
 `;

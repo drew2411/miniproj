@@ -5,37 +5,41 @@ import "@splidejs/splide/dist/css/splide.min.css";
 import { Link } from "react-router-dom";
 //process.env.SPOONACULAR_KEY
 
-function Popular() {
+function Spicy() {
 
     
 
     
     const key="fc87ae95447748c8927afc170bbd04e9";
-    const [popular, setPopular]= useState([]);
+    const [spicy, setSpicy]= useState([]);
     useEffect(() =>{
-        getPopular();
+        getSpicy();
     },[]);
-    const getPopular= async () => {
-        const check= localStorage.getItem("popular");
+    const getSpicy= async () => {
+        const check= localStorage.getItem("spicy");
         
-        if(check){
+        if(!check){
+            console.log("hi");
+            const api= await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${key}&number=9&tags=chilli`);
+              const data = await api.json();
+              
+              localStorage.setItem("spicy", JSON.stringify(data.recipes));
+              setSpicy(data.recipes);
+              console.log("BITCH");
+              //console.log(typeof data.recipes);
+              //console.log(data.recipes);
+              
+          }else{
             
-            setPopular(JSON.parse(check));
-        }else{
-            console.log("HIII");
-            const api= await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${key}&number=9`);
-            const data = await api.json();
-            localStorage.setItem("popular", JSON.stringify(data.recipes));
-            setPopular(data.recipes);
-            //console.log(data.recipes);
-        }
+            setSpicy(JSON.parse(check));
+          }
         
     };
   return (
     <div>
         
         <Wrapper>
-            <h3>Popular Recipes</h3>
+            <h3>Spicy Recipes</h3>
             <Splide options={
                 {perPage:4,
                 arrows : false,
@@ -43,7 +47,7 @@ function Popular() {
                 drag:  'free',
                 gap: "5rem"}
             }>
-            {popular.map((recipe) =>{
+            {spicy.map((recipe) =>{
                 return (
                     <SplideSlide key={recipe.id}>
                     <Card>
@@ -110,4 +114,4 @@ const Gradient= styled.div`
     background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.5));
 
 `;
-export default Popular
+export default Spicy

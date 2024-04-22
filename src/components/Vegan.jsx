@@ -5,29 +5,34 @@ import "@splidejs/splide/dist/css/splide.min.css";
 import { Link } from "react-router-dom";
 //process.env.SPOONACULAR_KEY
 
-function Popular() {
+function Vegan() {
 
     
 
     
     const key="fc87ae95447748c8927afc170bbd04e9";
-    const [popular, setPopular]= useState([]);
+    const [vegan, setVegan]= useState([]);
     useEffect(() =>{
-        getPopular();
+        getVegan();
     },[]);
-    const getPopular= async () => {
-        const check= localStorage.getItem("popular");
-        
-        if(check){
-            
-            setPopular(JSON.parse(check));
-        }else{
-            console.log("HIII");
-            const api= await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${key}&number=9`);
+    const getVegan= async () => {
+      
+        const check= localStorage.getItem("Vegan");
+        //console.log(check);
+        if(!check){
+          console.log("hi");
+          const api= await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${key}&number=9&tags=vegetarian`);
             const data = await api.json();
-            localStorage.setItem("popular", JSON.stringify(data.recipes));
-            setPopular(data.recipes);
+            
+            localStorage.setItem("vegan", JSON.stringify(data.recipes));
+            setVegan(data.recipes);
+            console.log("BITCH");
+            //console.log(typeof data.recipes);
             //console.log(data.recipes);
+            
+        }else{
+          
+          setVegan(JSON.parse(check));
         }
         
     };
@@ -35,19 +40,19 @@ function Popular() {
     <div>
         
         <Wrapper>
-            <h3>Popular Recipes</h3>
+            <h3>Vegan Recipes</h3>
             <Splide options={
-                {perPage:4,
+                {perPage:3,
                 arrows : false,
                 pagination: false,
                 drag:  'free',
                 gap: "5rem"}
             }>
-            {popular.map((recipe) =>{
+            {vegan.map((recipe) =>{
                 return (
                     <SplideSlide key={recipe.id}>
                     <Card>
-                        <Link to={"/recipe/"+recipe.id}>
+                        <Link to={`/recipe/${recipe.id}`}>
                         <p>{recipe.title}</p>
                         <img src={recipe.image} alt={recipe.title} />
                         </Link>
@@ -69,6 +74,7 @@ const Wrapper= styled.div`
         font-weight:1200;
         margin-bottom:1rem;
     }
+    margin-bottom:5rem;
 `;
 const Card= styled.div`
     min-height : 25rem;
@@ -78,8 +84,8 @@ const Card= styled.div`
     img{
         border-radius:2rem;
         position:absolute;
-        left:0;
-        wodth: 100%;
+        
+        width: 100%;
         height:100%;
         object-fit:cover;
 
@@ -110,4 +116,4 @@ const Gradient= styled.div`
     background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.5));
 
 `;
-export default Popular
+export default Vegan
